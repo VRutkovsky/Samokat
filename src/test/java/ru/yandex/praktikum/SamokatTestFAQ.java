@@ -6,25 +6,23 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 
-
 @RunWith(Parameterized.class)
-
 public class SamokatTestFAQ {
     private final String useBrowser; // Use "Chrome" or "EDGE"
-
     private WebDriver driver;
-
     private final String pageMain = "https://qa-scooter.praktikum-services.ru/";
 
-    public SamokatTestFAQ(String useBrowser){
+    public SamokatTestFAQ(String useBrowser) {
         this.useBrowser = useBrowser;
     }
+
     @Parameterized.Parameters
     public static Object[] getTestData() {
-        return new Object[] {"EDGE","Chrome",};
-        }
+        return new Object[]{"EDGE", "Chrome",};
+    }
+
     @Test
-    public void TestFAQ() {
+    public void testFAQ() {
 
         driver = SamokatDriver.initDriver(useBrowser);
         driver.get(pageMain);
@@ -34,8 +32,8 @@ public class SamokatTestFAQ {
 
         SamokatMainPageTest mainPage = new SamokatMainPageTest(driver);
         mainPage.userFAQTest();
-
     }
+
     @After
     public void teardown() {
         // Закрыть браузер

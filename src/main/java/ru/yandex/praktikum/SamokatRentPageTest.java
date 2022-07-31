@@ -34,11 +34,12 @@ public class SamokatRentPageTest {
     private final By inputOrderComment = new By.ByXPath(".//*[contains(@placeholder,'омментарий')]");
 
     // конструктор второй страницы заказа
-    public SamokatRentPageTest(WebDriver driver){
+    public SamokatRentPageTest(WebDriver driver) {
         this.driver = driver;
     }
+
     // ввод данных на второй странице заказа
-    public void OrderRentDataComplete(String orderDate, String orderTime, String orderColor, String orderComment){
+    public void OrderRentDataComplete(String orderDate, String orderTime, String orderColor, String orderComment) {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.visibilityOfElementLocated(inputOrderTitle));
 
@@ -49,33 +50,35 @@ public class SamokatRentPageTest {
 
         driver.findElement(inputOrderTime).click();
 
-        for(int i=0; i < driver.findElements(inputOrderTimeMenu).size(); i++){
-            if(Objects.equals(driver.findElements(inputOrderTimeMenu).get(i).getText(), orderTime)) {
+        for (int i = 0; i < driver.findElements(inputOrderTimeMenu).size(); i++) {
+            if (Objects.equals(driver.findElements(inputOrderTimeMenu).get(i).getText(), orderTime)) {
                 driver.findElements(inputOrderTimeMenu).get(i).click();
             }
         }
-
-        if(Objects.equals(orderColor, "black")) {
+        if (Objects.equals(orderColor, "black")) {
             driver.findElement(inputOrderColorBalck).click();
-        } else if(Objects.equals(orderColor, "grey")){
+        } else if (Objects.equals(orderColor, "grey")) {
             driver.findElement(inputOrderColorGrey).click();
         } else {
             System.out.println("Expected color 'black' or 'grey', while color <<" + orderColor + ">> provided.");
         }
         driver.findElement(inputOrderComment).sendKeys(orderComment);
     }
+
     // нажатие на кнопку завершения заказа
-    public void buttonNextClick(){
+    public void buttonNextClick() {
         driver.findElement(buttonOrderFinish).click();
     }
+
     // нажатие на кнопку подтверждения заказа
-    public void buttonOrderConfirm(){
+    public void buttonOrderConfirm() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.visibilityOfElementLocated(buttonOrderConfirm));
         driver.findElement(buttonOrderConfirm).click();
     }
+
     // проверка открытия диалога с сообщением об успешном формировании заказа
-    public void buttonOrderCreatedCheck(){
+    public void buttonOrderCreatedCheck() {
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.visibilityOfElementLocated(inputOrderCreatedTitle));
         String strResult = driver.findElement(inputOrderCreatedTitle).getText();

@@ -21,13 +21,11 @@ public class SamokatTestOrder {
     private final String orderTime;
     private final String orderColor;
     private final String orderComment;
-
     private WebDriver driver;
-
     private final String pageMain = "https://qa-scooter.praktikum-services.ru/";
     private final String pageOrder = "https://qa-scooter.praktikum-services.ru/order";
 
-    public SamokatTestOrder(String useBrowser, String useButton, String userName, String userSurname, String userAddress, String userMetro, String userPhone, String orderDate, String orderTime, String orderColor, String orderComment){
+    public SamokatTestOrder(String useBrowser, String useButton, String userName, String userSurname, String userAddress, String userMetro, String userPhone, String orderDate, String orderTime, String orderColor, String orderComment) {
         this.useBrowser = useBrowser;
         this.useButton = useButton;
         this.userName = userName;
@@ -40,17 +38,19 @@ public class SamokatTestOrder {
         this.orderColor = orderColor;
         this.orderComment = orderComment;
     }
+
     @Parameterized.Parameters
     public static Object[][] getTestData() {
-        return new Object[][] {
-                {"EDGE",   "TOP",    "Иван",  "Иванов","Москва ЕТ", "Сокол",    "+79998880001", "09.08.2022", "сутки",        "black", "EDGE TOP"},
-                {"EDGE",   "BOTTOM", "Петр",  "Петров","Москва ЕВ", "Лубянка",  "+79998880002", "10.08.2022", "трое суток",   "grey",  "EDGE BOTTOM"},
-                {"Chrome", "TOP",    "Ольга", "Белых", "Москва СТ", "Строгино", "+79998880003", "11.08.2022", "пятеро суток", "black", "Chrome TOP"},
-                {"Chrome", "BOTTOM", "Ирина", "Черных","Москва СВ", "ВДНХ",     "+79998880004", "12.08.2022", "семеро суток", "grey",  "Chrome BOTTOM"}
+        return new Object[][]{
+                {"EDGE", "TOP", "Иван", "Иванов", "Москва ЕТ", "Сокол", "+79998880001", "09.08.2022", "сутки", "black", "EDGE TOP"},
+                {"EDGE", "BOTTOM", "Петр", "Петров", "Москва ЕВ", "Лубянка", "+79998880002", "10.08.2022", "трое суток", "grey", "EDGE BOTTOM"},
+                {"Chrome", "TOP", "Ольга", "Белых", "Москва СТ", "Строгино", "+79998880003", "11.08.2022", "пятеро суток", "black", "Chrome TOP"},
+                {"Chrome", "BOTTOM", "Ирина", "Черных", "Москва СВ", "ВДНХ", "+79998880004", "12.08.2022", "семеро суток", "grey", "Chrome BOTTOM"}
         };
     }
+
     @Test
-    public void TestOrder() {
+    public void testOrder() {
 
         driver = SamokatDriver.initDriver(useBrowser);
         driver.get(pageMain);
@@ -60,19 +60,18 @@ public class SamokatTestOrder {
 
         SamokatMainPageTest mainPage = new SamokatMainPageTest(driver);
 
-        if(Objects.equals(useButton, "TOP")) {
+        if (Objects.equals(useButton, "TOP")) {
             mainPage.buttonOrderTopClick();
-        } else if (Objects.equals(useButton, "BOTTOM")){
+        } else if (Objects.equals(useButton, "BOTTOM")) {
             mainPage.buttonOrderBottomClick();
         } else {
             System.out.println("Button usage should be <<TOP>> or <<BOTTOM>>");
         }
-
         driver.get(pageOrder);
 
         SamokatOrderPageTest orderPage = new SamokatOrderPageTest(driver);
 
-        orderPage.OrderFormDataComplete(userName, userSurname,userAddress, userMetro, userPhone);
+        orderPage.OrderFormDataComplete(userName, userSurname, userAddress, userMetro, userPhone);
         orderPage.buttonNextClick();
 
         SamokatRentPageTest rentPage = new SamokatRentPageTest(driver);

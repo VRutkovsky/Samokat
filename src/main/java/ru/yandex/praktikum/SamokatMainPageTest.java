@@ -8,7 +8,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.junit.Assert.assertTrue;
 
-
 public class SamokatMainPageTest {
     private WebDriver driver;
 
@@ -20,10 +19,7 @@ public class SamokatMainPageTest {
     private final By buttonOrderBottom = new By.ByXPath(".//div[contains(@class,'Home_RoadMap')]//*[contains(@class,'Button_Button__ra12g')]");
     // Кнопка проверки статуса заказа
     private final By buttonOrderStatus = new By.ByClassName("Header_Link__1TAG7");
-
-
     private final int numberFAQ = 8;
-
     private By[] userQuestions = new By[numberFAQ];      // Список вопросов FAQ
     private By[] userAnswers = new By[numberFAQ];        // Список ответов FAQ
     private final int questionCostPayment = 0;    // Номер вопроса Сколько это стоит
@@ -36,7 +32,7 @@ public class SamokatMainPageTest {
     private final int questionMKAD = 7;  // Номер вопроса За МКАДОМ
 
     // Main Page Constructor
-    public SamokatMainPageTest(WebDriver driver){
+    public SamokatMainPageTest(WebDriver driver) {
         this.driver = driver;
 
         this.userQuestions[questionCostPayment] = new By.ByXPath(".//div[@class='accordion__item']//div[contains(text(),'Сколько это стоит?')]");     // Сколько это стоит
@@ -60,27 +56,30 @@ public class SamokatMainPageTest {
     }
 
     // Нажатие верхней кнопки создания заказа
-    public void buttonOrderTopClick(){
+    public void buttonOrderTopClick() {
         driver.findElement(buttonOrderTop).click();
     }
+
     // Нажатие нижней кнопки создания заказа
-    public void buttonOrderBottomClick(){
+    public void buttonOrderBottomClick() {
         driver.findElement(buttonOrderBottom).click();
     }
+
     // Нажатие кнопки статуса заказа
-    public void buttonOrderStatusClick(){
+    public void buttonOrderStatusClick() {
         driver.findElement(buttonOrderStatus).click();
     }
+
     // Проверка открытия ответа на вопрос из FAQ
-    public void userQuestionClickAndCheckAnswer(int i){
+    public void userQuestionClickAndCheckAnswer(int i) {
         driver.findElement(userQuestions[i]).click();
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.visibilityOfElementLocated(userAnswers[i]));
         assertTrue(driver.findElement(userAnswers[i]).isDisplayed());
     }
-    // Проверка открытия ответа на каждый вопрос из FAQ на главной странице
-    public void userFAQTest(){
 
+    // Проверка открытия ответа на каждый вопрос из FAQ на главной странице
+    public void userFAQTest() {
         // Ждать до появления заголовка страницы
         new WebDriverWait(driver, 10)
                 .until(ExpectedConditions.visibilityOfElementLocated(headerSamokat));
@@ -90,9 +89,8 @@ public class SamokatMainPageTest {
         js.executeScript("arguments[0].scrollIntoView();", driver.findElement(userQuestions[0]));
 
         // перебор вопросов в списке
-        for(int i=0; i < numberFAQ; i++){
+        for (int i = 0; i < numberFAQ; i++) {
             userQuestionClickAndCheckAnswer(i);
         }
     }
-
-   }
+}

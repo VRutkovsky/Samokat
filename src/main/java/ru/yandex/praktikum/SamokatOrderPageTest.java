@@ -18,13 +18,14 @@ public class SamokatOrderPageTest {
     private final By inputOrderMetro = new By.ByXPath(".//*[contains(@placeholder,'Станция')]");
     // Поле ввода Телефон
     private final By inputOrderPhone = new By.ByXPath(".//*[contains(@placeholder,'Телефон')]");
-    // Конструктор первой страницы заказа
-    public SamokatOrderPageTest(WebDriver driver){
-        this.driver = driver;
 
+    // Конструктор первой страницы заказа
+    public SamokatOrderPageTest(WebDriver driver) {
+        this.driver = driver;
     }
+
     // Ввод данных на первую страницу заказа
-    public void OrderFormDataComplete(String userName, String userSurname, String userAddress, String userMetro, String userPhone){
+    public void OrderFormDataComplete(String userName, String userSurname, String userAddress, String userMetro, String userPhone) {
 
         driver.findElement(inputOrderName).clear();
         driver.findElement(inputOrderSurname).clear();
@@ -46,8 +47,9 @@ public class SamokatOrderPageTest {
 
         driver.findElement(inputOrderPhone).sendKeys(userPhone);
     }
+
     // Нажатие на кнопку Далее
-    public void buttonNextClick(){
+    public void buttonNextClick() {
         driver.findElement(buttonNext).click();
     }
 }

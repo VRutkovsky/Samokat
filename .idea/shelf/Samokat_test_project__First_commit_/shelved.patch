@@ -1,0 +1,441 @@
+Index: src/test/java/ru/yandex/praktikum/SamokatTestOrder.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.yandex.praktikum;\r\n\r\nimport org.junit.After;\r\nimport org.junit.Test;\r\nimport org.junit.runner.RunWith;\r\nimport org.junit.runners.Parameterized;\r\nimport org.openqa.selenium.WebDriver;\r\n\r\nimport java.util.Objects;\r\n\r\n@RunWith(Parameterized.class)\r\npublic class SamokatTestOrder {\r\n    private final String useBrowser; // Use \"Chrome\" or \"EDGE\"\r\n    private final String useButton; // Use \"TOP\" or \"BOTTOM\"\r\n    private final String userName;\r\n    private final String userSurname;\r\n    private final String userAddress;\r\n    private final String userMetro;\r\n    private final String userPhone;\r\n    private final String orderDate;\r\n    private final String orderTime;\r\n    private final String orderColor;\r\n    private final String orderComment;\r\n\r\n    private WebDriver driver;\r\n\r\n    private final String pageMain = \"https://qa-scooter.praktikum-services.ru/\";\r\n    private final String pageOrder = \"https://qa-scooter.praktikum-services.ru/order\";\r\n\r\n    public SamokatTestOrder(String useBrowser, String useButton, String userName, String userSurname, String userAddress, String userMetro, String userPhone, String orderDate, String orderTime, String orderColor, String orderComment){\r\n        this.useBrowser = useBrowser;\r\n        this.useButton = useButton;\r\n        this.userName = userName;\r\n        this.userSurname = userSurname;\r\n        this.userAddress = userAddress;\r\n        this.userMetro = userMetro;\r\n        this.userPhone = userPhone;\r\n        this.orderDate = orderDate;\r\n        this.orderTime = orderTime;\r\n        this.orderColor = orderColor;\r\n        this.orderComment = orderComment;\r\n    }\r\n    @Parameterized.Parameters\r\n    public static Object[][] getTestData() {\r\n        return new Object[][] {\r\n                {\"EDGE\",   \"TOP\",    \"Иван\",  \"Иванов\",\"Москва ЕТ\", \"Сокол\",    \"+79998880001\", \"09.08.2022\", \"сутки\",        \"black\", \"EDGE TOP\"},\r\n                {\"EDGE\",   \"BOTTOM\", \"Петр\",  \"Петров\",\"Москва ЕВ\", \"Лубянка\",  \"+79998880002\", \"10.08.2022\", \"трое суток\",   \"grey\",  \"EDGE BOTTOM\"},\r\n                {\"Chrome\", \"TOP\",    \"Ольга\", \"Белых\", \"Москва СТ\", \"Строгино\", \"+79998880003\", \"11.08.2022\", \"пятеро суток\", \"black\", \"Chrome TOP\"},\r\n                {\"Chrome\", \"BOTTOM\", \"Ирина\", \"Черных\",\"Москва СВ\", \"ВДНХ\",     \"+79998880004\", \"12.08.2022\", \"семеро суток\", \"grey\",  \"Chrome BOTTOM\"}\r\n        };\r\n    }\r\n    @Test\r\n    public void TestOrder() {\r\n\r\n        driver = SamokatDriver.initDriver(useBrowser);\r\n        driver.get(pageMain);\r\n\r\n        SamokatCookieOk cookieDialog = new SamokatCookieOk(driver);\r\n        cookieDialog.buttonCookieOkClick();\r\n\r\n        SamokatMainPageTest mainPage = new SamokatMainPageTest(driver);\r\n\r\n        if(Objects.equals(useButton, \"TOP\")) {\r\n            mainPage.buttonOrderTopClick();\r\n        } else if (Objects.equals(useButton, \"BOTTOM\")){\r\n            mainPage.buttonOrderBottomClick();\r\n        } else {\r\n            System.out.println(\"Button usage should be <<TOP>> or <<BOTTOM>>\");\r\n        }\r\n\r\n        driver.get(pageOrder);\r\n\r\n        SamokatOrderPageTest orderPage = new SamokatOrderPageTest(driver);\r\n\r\n        orderPage.OrderFormDataComplete(userName, userSurname,userAddress, userMetro, userPhone);\r\n        orderPage.buttonNextClick();\r\n\r\n        SamokatRentPageTest rentPage = new SamokatRentPageTest(driver);\r\n\r\n        rentPage.OrderRentDataComplete(orderDate, orderTime, orderColor, orderComment);\r\n        rentPage.buttonNextClick();\r\n        rentPage.buttonOrderConfirm();\r\n        rentPage.buttonOrderCreatedCheck();\r\n    }\r\n\r\n    @After\r\n    public void teardown() {\r\n        // Закрыть браузер\r\n        driver.quit();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/ru/yandex/praktikum/SamokatTestOrder.java b/src/test/java/ru/yandex/praktikum/SamokatTestOrder.java
+--- a/src/test/java/ru/yandex/praktikum/SamokatTestOrder.java	(revision 8c23eb7bbe616480b8b835b34f7ad6e4284dc419)
++++ b/src/test/java/ru/yandex/praktikum/SamokatTestOrder.java	(date 1659245846923)
+@@ -21,13 +21,11 @@
+     private final String orderTime;
+     private final String orderColor;
+     private final String orderComment;
+-
+     private WebDriver driver;
+-
+     private final String pageMain = "https://qa-scooter.praktikum-services.ru/";
+     private final String pageOrder = "https://qa-scooter.praktikum-services.ru/order";
+ 
+-    public SamokatTestOrder(String useBrowser, String useButton, String userName, String userSurname, String userAddress, String userMetro, String userPhone, String orderDate, String orderTime, String orderColor, String orderComment){
++    public SamokatTestOrder(String useBrowser, String useButton, String userName, String userSurname, String userAddress, String userMetro, String userPhone, String orderDate, String orderTime, String orderColor, String orderComment) {
+         this.useBrowser = useBrowser;
+         this.useButton = useButton;
+         this.userName = userName;
+@@ -40,17 +38,19 @@
+         this.orderColor = orderColor;
+         this.orderComment = orderComment;
+     }
++
+     @Parameterized.Parameters
+     public static Object[][] getTestData() {
+-        return new Object[][] {
+-                {"EDGE",   "TOP",    "Иван",  "Иванов","Москва ЕТ", "Сокол",    "+79998880001", "09.08.2022", "сутки",        "black", "EDGE TOP"},
+-                {"EDGE",   "BOTTOM", "Петр",  "Петров","Москва ЕВ", "Лубянка",  "+79998880002", "10.08.2022", "трое суток",   "grey",  "EDGE BOTTOM"},
+-                {"Chrome", "TOP",    "Ольга", "Белых", "Москва СТ", "Строгино", "+79998880003", "11.08.2022", "пятеро суток", "black", "Chrome TOP"},
+-                {"Chrome", "BOTTOM", "Ирина", "Черных","Москва СВ", "ВДНХ",     "+79998880004", "12.08.2022", "семеро суток", "grey",  "Chrome BOTTOM"}
++        return new Object[][]{
++                {"EDGE", "TOP", "Иван", "Иванов", "Москва ЕТ", "Сокол", "+79998880001", "09.08.2022", "сутки", "black", "EDGE TOP"},
++                {"EDGE", "BOTTOM", "Петр", "Петров", "Москва ЕВ", "Лубянка", "+79998880002", "10.08.2022", "трое суток", "grey", "EDGE BOTTOM"},
++                {"Chrome", "TOP", "Ольга", "Белых", "Москва СТ", "Строгино", "+79998880003", "11.08.2022", "пятеро суток", "black", "Chrome TOP"},
++                {"Chrome", "BOTTOM", "Ирина", "Черных", "Москва СВ", "ВДНХ", "+79998880004", "12.08.2022", "семеро суток", "grey", "Chrome BOTTOM"}
+         };
+     }
++
+     @Test
+-    public void TestOrder() {
++    public void testOrder() {
+ 
+         driver = SamokatDriver.initDriver(useBrowser);
+         driver.get(pageMain);
+@@ -60,19 +60,18 @@
+ 
+         SamokatMainPageTest mainPage = new SamokatMainPageTest(driver);
+ 
+-        if(Objects.equals(useButton, "TOP")) {
++        if (Objects.equals(useButton, "TOP")) {
+             mainPage.buttonOrderTopClick();
+-        } else if (Objects.equals(useButton, "BOTTOM")){
++        } else if (Objects.equals(useButton, "BOTTOM")) {
+             mainPage.buttonOrderBottomClick();
+         } else {
+             System.out.println("Button usage should be <<TOP>> or <<BOTTOM>>");
+         }
+-
+         driver.get(pageOrder);
+ 
+         SamokatOrderPageTest orderPage = new SamokatOrderPageTest(driver);
+ 
+-        orderPage.OrderFormDataComplete(userName, userSurname,userAddress, userMetro, userPhone);
++        orderPage.OrderFormDataComplete(userName, userSurname, userAddress, userMetro, userPhone);
+         orderPage.buttonNextClick();
+ 
+         SamokatRentPageTest rentPage = new SamokatRentPageTest(driver);
+Index: src/main/java/ru/yandex/praktikum/SamokatMainPageTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.yandex.praktikum;\r\n\r\nimport org.openqa.selenium.By;\r\nimport org.openqa.selenium.JavascriptExecutor;\r\nimport org.openqa.selenium.WebDriver;\r\nimport org.openqa.selenium.support.ui.ExpectedConditions;\r\nimport org.openqa.selenium.support.ui.WebDriverWait;\r\n\r\nimport static org.junit.Assert.assertTrue;\r\n\r\n\r\npublic class SamokatMainPageTest {\r\n    private WebDriver driver;\r\n\r\n    // Заголовок главной страницы\r\n    private final By headerSamokat = new By.ByXPath(\".//*[contains(text(),'Самокат')]\");\r\n    // Верхняя кнопка создания заказа\r\n    private final By buttonOrderTop = new By.ByClassName(\"Button_Button__ra12g\");\r\n    // Нижняя кнопка создания заказа\r\n    private final By buttonOrderBottom = new By.ByXPath(\".//div[contains(@class,'Home_RoadMap')]//*[contains(@class,'Button_Button__ra12g')]\");\r\n    // Кнопка проверки статуса заказа\r\n    private final By buttonOrderStatus = new By.ByClassName(\"Header_Link__1TAG7\");\r\n\r\n\r\n    private final int numberFAQ = 8;\r\n\r\n    private By[] userQuestions = new By[numberFAQ];      // Список вопросов FAQ\r\n    private By[] userAnswers = new By[numberFAQ];        // Список ответов FAQ\r\n    private final int questionCostPayment = 0;    // Номер вопроса Сколько это стоит\r\n    private final int questionSamokatNumber = 1;  // Номер вопроса Хочу сразу несколько\r\n    private final int questionRentTimeCalc = 2;  // Номер вопроса Как рассчитать время\r\n    private final int questionSamokatToday = 3;  // Номер вопроса Можно взять сегодня\r\n    private final int questionRentTimeChange = 4;  // Номер вопроса Можно ли продлить\r\n    private final int questionCharger = 5;  // Номер вопроса Вы привозите зараядку\r\n    private final int questionOrderCancel = 6;  // Номер вопроса Можно ли отменить\r\n    private final int questionMKAD = 7;  // Номер вопроса За МКАДОМ\r\n\r\n    // Main Page Constructor\r\n    public SamokatMainPageTest(WebDriver driver){\r\n        this.driver = driver;\r\n\r\n        this.userQuestions[questionCostPayment] = new By.ByXPath(\".//div[@class='accordion__item']//div[contains(text(),'Сколько это стоит?')]\");     // Сколько это стоит\r\n        this.userQuestions[questionSamokatNumber] = new By.ByXPath(\".//div[@class='accordion__item']//div[contains(text(),'Хочу сразу несколько')]\");   // Хочу сразу несколько\r\n        this.userQuestions[questionRentTimeCalc] = new By.ByXPath(\".//div[@class='accordion__item']//div[contains(text(),'Как рассчитывается время')]\");   // Как рассчитать время\r\n        this.userQuestions[questionSamokatToday] = new By.ByXPath(\".//div[@class='accordion__item']//div[contains(text(),'самокат прямо на сегодня')]\");   // Можно взять сегодня\r\n        this.userQuestions[questionRentTimeChange] = new By.ByXPath(\".//div[@class='accordion__item']//div[contains(text(),'Можно ли продлить заказ')]\"); // Можно ли продлить\r\n        this.userQuestions[questionCharger] = new By.ByXPath(\".//div[@class='accordion__item']//div[contains(text(),'Вы привозите зарядку')]\");        // Вы привозите зараядку\r\n        this.userQuestions[questionOrderCancel] = new By.ByXPath(\".//div[@class='accordion__item']//div[contains(text(),'Можно ли отменить')]\");    // Можно ли отменить\r\n        this.userQuestions[questionMKAD] = new By.ByXPath(\".//div[@class='accordion__item']//div[contains(text(),'за МКАДом')]\");           // За МКАДОМ\r\n\r\n        this.userAnswers[questionCostPayment] = new By.ByXPath(\".//div[@class='accordion__item']//p[contains(text(),'Сутки — ')]\");     // Сколько это стоит\r\n        this.userAnswers[questionSamokatNumber] = new By.ByXPath(\".//div[@class='accordion__item']//p[contains(text(),'один заказ — один самокат.')]\");   // Хочу сразу несколько\r\n        this.userAnswers[questionRentTimeCalc] = new By.ByXPath(\".//div[@class='accordion__item']//p[contains(text(),'Мы привозим самокат')]\");   // Как рассчитать время\r\n        this.userAnswers[questionSamokatToday] = new By.ByXPath(\".//div[@class='accordion__item']//p[contains(text(),'Только начиная с завтрашнего дня')]\");   // Можно взять сегодня\r\n        this.userAnswers[questionRentTimeChange] = new By.ByXPath(\".//div[@class='accordion__item']//p[contains(text(),'Пока что нет')]\"); // Можно ли продлить\r\n        this.userAnswers[questionCharger] = new By.ByXPath(\".//div[@class='accordion__item']//p[contains(text(),'с полной зарядкой')]\");        // Вы привозите зараядку\r\n        this.userAnswers[questionOrderCancel] = new By.ByXPath(\".//div[@class='accordion__item']//p[contains(text(),'Штрафа не будет')]\");    // Можно ли отменить\r\n        this.userAnswers[questionMKAD] = new By.ByXPath(\".//div[@class='accordion__item']//p[contains(text(),'И Москве, и Московской')]\");           // За МКАДОМ\r\n\r\n    }\r\n\r\n    // Нажатие верхней кнопки создания заказа\r\n    public void buttonOrderTopClick(){\r\n        driver.findElement(buttonOrderTop).click();\r\n    }\r\n    // Нажатие нижней кнопки создания заказа\r\n    public void buttonOrderBottomClick(){\r\n        driver.findElement(buttonOrderBottom).click();\r\n    }\r\n    // Нажатие кнопки статуса заказа\r\n    public void buttonOrderStatusClick(){\r\n        driver.findElement(buttonOrderStatus).click();\r\n    }\r\n    // Проверка открытия ответа на вопрос из FAQ\r\n    public void userQuestionClickAndCheckAnswer(int i){\r\n        driver.findElement(userQuestions[i]).click();\r\n        new WebDriverWait(driver, 10)\r\n                .until(ExpectedConditions.visibilityOfElementLocated(userAnswers[i]));\r\n        assertTrue(driver.findElement(userAnswers[i]).isDisplayed());\r\n    }\r\n    // Проверка открытия ответа на каждый вопрос из FAQ на главной странице\r\n    public void userFAQTest(){\r\n\r\n        // Ждать до появления заголовка страницы\r\n        new WebDriverWait(driver, 10)\r\n                .until(ExpectedConditions.visibilityOfElementLocated(headerSamokat));\r\n\r\n        // Скролл до вопросов\r\n        JavascriptExecutor js = (JavascriptExecutor) driver;\r\n        js.executeScript(\"arguments[0].scrollIntoView();\", driver.findElement(userQuestions[0]));\r\n\r\n        // перебор вопросов в списке\r\n        for(int i=0; i < numberFAQ; i++){\r\n            userQuestionClickAndCheckAnswer(i);\r\n        }\r\n    }\r\n\r\n   }\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/ru/yandex/praktikum/SamokatMainPageTest.java b/src/main/java/ru/yandex/praktikum/SamokatMainPageTest.java
+--- a/src/main/java/ru/yandex/praktikum/SamokatMainPageTest.java	(revision 8c23eb7bbe616480b8b835b34f7ad6e4284dc419)
++++ b/src/main/java/ru/yandex/praktikum/SamokatMainPageTest.java	(date 1659245846939)
+@@ -8,7 +8,6 @@
+ 
+ import static org.junit.Assert.assertTrue;
+ 
+-
+ public class SamokatMainPageTest {
+     private WebDriver driver;
+ 
+@@ -20,10 +19,7 @@
+     private final By buttonOrderBottom = new By.ByXPath(".//div[contains(@class,'Home_RoadMap')]//*[contains(@class,'Button_Button__ra12g')]");
+     // Кнопка проверки статуса заказа
+     private final By buttonOrderStatus = new By.ByClassName("Header_Link__1TAG7");
+-
+-
+     private final int numberFAQ = 8;
+-
+     private By[] userQuestions = new By[numberFAQ];      // Список вопросов FAQ
+     private By[] userAnswers = new By[numberFAQ];        // Список ответов FAQ
+     private final int questionCostPayment = 0;    // Номер вопроса Сколько это стоит
+@@ -36,7 +32,7 @@
+     private final int questionMKAD = 7;  // Номер вопроса За МКАДОМ
+ 
+     // Main Page Constructor
+-    public SamokatMainPageTest(WebDriver driver){
++    public SamokatMainPageTest(WebDriver driver) {
+         this.driver = driver;
+ 
+         this.userQuestions[questionCostPayment] = new By.ByXPath(".//div[@class='accordion__item']//div[contains(text(),'Сколько это стоит?')]");     // Сколько это стоит
+@@ -60,27 +56,30 @@
+     }
+ 
+     // Нажатие верхней кнопки создания заказа
+-    public void buttonOrderTopClick(){
++    public void buttonOrderTopClick() {
+         driver.findElement(buttonOrderTop).click();
+     }
++
+     // Нажатие нижней кнопки создания заказа
+-    public void buttonOrderBottomClick(){
++    public void buttonOrderBottomClick() {
+         driver.findElement(buttonOrderBottom).click();
+     }
++
+     // Нажатие кнопки статуса заказа
+-    public void buttonOrderStatusClick(){
++    public void buttonOrderStatusClick() {
+         driver.findElement(buttonOrderStatus).click();
+     }
++
+     // Проверка открытия ответа на вопрос из FAQ
+-    public void userQuestionClickAndCheckAnswer(int i){
++    public void userQuestionClickAndCheckAnswer(int i) {
+         driver.findElement(userQuestions[i]).click();
+         new WebDriverWait(driver, 10)
+                 .until(ExpectedConditions.visibilityOfElementLocated(userAnswers[i]));
+         assertTrue(driver.findElement(userAnswers[i]).isDisplayed());
+     }
++
+     // Проверка открытия ответа на каждый вопрос из FAQ на главной странице
+-    public void userFAQTest(){
+-
++    public void userFAQTest() {
+         // Ждать до появления заголовка страницы
+         new WebDriverWait(driver, 10)
+                 .until(ExpectedConditions.visibilityOfElementLocated(headerSamokat));
+@@ -90,9 +89,8 @@
+         js.executeScript("arguments[0].scrollIntoView();", driver.findElement(userQuestions[0]));
+ 
+         // перебор вопросов в списке
+-        for(int i=0; i < numberFAQ; i++){
++        for (int i = 0; i < numberFAQ; i++) {
+             userQuestionClickAndCheckAnswer(i);
+         }
+     }
+-
+-   }
++}
+Index: src/main/java/ru/yandex/praktikum/SamokatRentPageTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.yandex.praktikum;\r\n\r\nimport org.openqa.selenium.By;\r\nimport org.openqa.selenium.Keys;\r\nimport org.openqa.selenium.WebDriver;\r\nimport org.openqa.selenium.support.ui.ExpectedConditions;\r\nimport org.openqa.selenium.support.ui.WebDriverWait;\r\n\r\nimport java.util.Objects;\r\n\r\nimport static org.junit.Assert.assertTrue;\r\n\r\npublic class SamokatRentPageTest {\r\n    private WebDriver driver;\r\n    // Заголовок \"Про аренду\"\r\n    private final By inputOrderTitle = new By.ByClassName(\"Order_Header__BZXOb\");\r\n    // Заголовок сообщения о создании заказа\r\n    private final By inputOrderCreatedTitle = new By.ByClassName(\"Order_ModalHeader__3FDaJ\");\r\n    // Кнопка завершения заказа\r\n    private final By buttonOrderFinish = new By.ByXPath(\".//*[contains(@class,'Button_Button__ra12g Button_Middle') and text() = 'Заказать']\");\r\n    // Кнопка подтверждения заказа\r\n    private final By buttonOrderConfirm = new By.ByXPath(\".//button[text()='Да']\");\r\n    // Поле даты когда привезти самокат\r\n    private final By inputOrderDate = new By.ByXPath(\".//*[contains(@placeholder,'Когда')]\");\r\n    // Поле длительности аренды\r\n    private final By inputOrderTime = new By.ByXPath(\".//*[contains(@class,'Dropdown-root')]\");\r\n    // Список опций по длительности аренды\r\n    private final By inputOrderTimeMenu = new By.ByXPath(\".//*[@class = 'Dropdown-option']\");\r\n    // Чек бокс черный цвет\r\n    private final By inputOrderColorBalck = new By.ByXPath(\".//*[@class='Checkbox_Input__14A2w' and @id='black']\");\r\n    // Чек бокс серый цвет\r\n    private final By inputOrderColorGrey = new By.ByXPath(\".//*[@class='Checkbox_Input__14A2w' and @id='grey']\");\r\n    // Поле комментария\r\n    private final By inputOrderComment = new By.ByXPath(\".//*[contains(@placeholder,'омментарий')]\");\r\n\r\n    // конструктор второй страницы заказа\r\n    public SamokatRentPageTest(WebDriver driver){\r\n        this.driver = driver;\r\n    }\r\n    // ввод данных на второй странице заказа\r\n    public void OrderRentDataComplete(String orderDate, String orderTime, String orderColor, String orderComment){\r\n        new WebDriverWait(driver, 10)\r\n                .until(ExpectedConditions.visibilityOfElementLocated(inputOrderTitle));\r\n\r\n        driver.findElement(inputOrderComment).clear();\r\n\r\n        driver.findElement(inputOrderDate).sendKeys(orderDate);\r\n        driver.findElement(inputOrderDate).sendKeys(Keys.ENTER);\r\n\r\n        driver.findElement(inputOrderTime).click();\r\n\r\n        for(int i=0; i < driver.findElements(inputOrderTimeMenu).size(); i++){\r\n            if(Objects.equals(driver.findElements(inputOrderTimeMenu).get(i).getText(), orderTime)) {\r\n                driver.findElements(inputOrderTimeMenu).get(i).click();\r\n            }\r\n        }\r\n\r\n        if(Objects.equals(orderColor, \"black\")) {\r\n            driver.findElement(inputOrderColorBalck).click();\r\n        } else if(Objects.equals(orderColor, \"grey\")){\r\n            driver.findElement(inputOrderColorGrey).click();\r\n        } else {\r\n            System.out.println(\"Expected color 'black' or 'grey', while color <<\" + orderColor + \">> provided.\");\r\n        }\r\n        driver.findElement(inputOrderComment).sendKeys(orderComment);\r\n    }\r\n    // нажатие на кнопку завершения заказа\r\n    public void buttonNextClick(){\r\n        driver.findElement(buttonOrderFinish).click();\r\n    }\r\n    // нажатие на кнопку подтверждения заказа\r\n    public void buttonOrderConfirm(){\r\n        new WebDriverWait(driver, 10)\r\n                .until(ExpectedConditions.visibilityOfElementLocated(buttonOrderConfirm));\r\n        driver.findElement(buttonOrderConfirm).click();\r\n    }\r\n    // проверка открытия диалога с сообщением об успешном формировании заказа\r\n    public void buttonOrderCreatedCheck(){\r\n        new WebDriverWait(driver, 10)\r\n                .until(ExpectedConditions.visibilityOfElementLocated(inputOrderCreatedTitle));\r\n        String strResult = driver.findElement(inputOrderCreatedTitle).getText();\r\n        assertTrue(strResult.startsWith(\"Заказ оформлен\"));\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/ru/yandex/praktikum/SamokatRentPageTest.java b/src/main/java/ru/yandex/praktikum/SamokatRentPageTest.java
+--- a/src/main/java/ru/yandex/praktikum/SamokatRentPageTest.java	(revision 8c23eb7bbe616480b8b835b34f7ad6e4284dc419)
++++ b/src/main/java/ru/yandex/praktikum/SamokatRentPageTest.java	(date 1659245846933)
+@@ -34,11 +34,12 @@
+     private final By inputOrderComment = new By.ByXPath(".//*[contains(@placeholder,'омментарий')]");
+ 
+     // конструктор второй страницы заказа
+-    public SamokatRentPageTest(WebDriver driver){
++    public SamokatRentPageTest(WebDriver driver) {
+         this.driver = driver;
+     }
++
+     // ввод данных на второй странице заказа
+-    public void OrderRentDataComplete(String orderDate, String orderTime, String orderColor, String orderComment){
++    public void OrderRentDataComplete(String orderDate, String orderTime, String orderColor, String orderComment) {
+         new WebDriverWait(driver, 10)
+                 .until(ExpectedConditions.visibilityOfElementLocated(inputOrderTitle));
+ 
+@@ -49,33 +50,35 @@
+ 
+         driver.findElement(inputOrderTime).click();
+ 
+-        for(int i=0; i < driver.findElements(inputOrderTimeMenu).size(); i++){
+-            if(Objects.equals(driver.findElements(inputOrderTimeMenu).get(i).getText(), orderTime)) {
++        for (int i = 0; i < driver.findElements(inputOrderTimeMenu).size(); i++) {
++            if (Objects.equals(driver.findElements(inputOrderTimeMenu).get(i).getText(), orderTime)) {
+                 driver.findElements(inputOrderTimeMenu).get(i).click();
+             }
+         }
+-
+-        if(Objects.equals(orderColor, "black")) {
++        if (Objects.equals(orderColor, "black")) {
+             driver.findElement(inputOrderColorBalck).click();
+-        } else if(Objects.equals(orderColor, "grey")){
++        } else if (Objects.equals(orderColor, "grey")) {
+             driver.findElement(inputOrderColorGrey).click();
+         } else {
+             System.out.println("Expected color 'black' or 'grey', while color <<" + orderColor + ">> provided.");
+         }
+         driver.findElement(inputOrderComment).sendKeys(orderComment);
+     }
++
+     // нажатие на кнопку завершения заказа
+-    public void buttonNextClick(){
++    public void buttonNextClick() {
+         driver.findElement(buttonOrderFinish).click();
+     }
++
+     // нажатие на кнопку подтверждения заказа
+-    public void buttonOrderConfirm(){
++    public void buttonOrderConfirm() {
+         new WebDriverWait(driver, 10)
+                 .until(ExpectedConditions.visibilityOfElementLocated(buttonOrderConfirm));
+         driver.findElement(buttonOrderConfirm).click();
+     }
++
+     // проверка открытия диалога с сообщением об успешном формировании заказа
+-    public void buttonOrderCreatedCheck(){
++    public void buttonOrderCreatedCheck() {
+         new WebDriverWait(driver, 10)
+                 .until(ExpectedConditions.visibilityOfElementLocated(inputOrderCreatedTitle));
+         String strResult = driver.findElement(inputOrderCreatedTitle).getText();
+Index: src/main/java/ru/yandex/praktikum/SamokatOrderPageTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.yandex.praktikum;\r\n\r\nimport org.openqa.selenium.By;\r\nimport org.openqa.selenium.Keys;\r\nimport org.openqa.selenium.WebDriver;\r\n\r\npublic class SamokatOrderPageTest {\r\n    private WebDriver driver;\r\n    // Кнопка Далее\r\n    private final By buttonNext = new By.ByXPath(\".//button[contains(text(),'Далее')]\");\r\n    // Поле ввода Имя\r\n    private final By inputOrderName = new By.ByXPath(\".//div[@class='Input_InputContainer__3NykH']//*[contains(@placeholder,'Имя')]\");\r\n    // Поле ввода фамилия\r\n    private final By inputOrderSurname = new By.ByXPath(\".//div[@class='Input_InputContainer__3NykH']//*[contains(@placeholder,'Фамилия')]\");\r\n    // Поле ввода Адрес\r\n    private final By inputOrderAddress = new By.ByXPath(\".//div[@class='Input_InputContainer__3NykH']//*[contains(@placeholder,'Адрес')]\");\r\n    // Поле ввода Станция метро\r\n    private final By inputOrderMetro = new By.ByXPath(\".//*[contains(@placeholder,'Станция')]\");\r\n    // Поле ввода Телефон\r\n    private final By inputOrderPhone = new By.ByXPath(\".//*[contains(@placeholder,'Телефон')]\");\r\n    // Конструктор первой страницы заказа\r\n    public SamokatOrderPageTest(WebDriver driver){\r\n        this.driver = driver;\r\n\r\n    }\r\n    // Ввод данных на первую страницу заказа\r\n    public void OrderFormDataComplete(String userName, String userSurname, String userAddress, String userMetro, String userPhone){\r\n\r\n        driver.findElement(inputOrderName).clear();\r\n        driver.findElement(inputOrderSurname).clear();\r\n        driver.findElement(inputOrderAddress).clear();\r\n        driver.findElement(inputOrderMetro).clear();\r\n        driver.findElement(inputOrderPhone).clear();\r\n\r\n        SamokatCookieOk cookieDialog = new SamokatCookieOk(driver);\r\n        cookieDialog.buttonCookieOkClick();\r\n\r\n        driver.findElement(inputOrderName).sendKeys(userName);\r\n        driver.findElement(inputOrderSurname).sendKeys(userSurname);\r\n        driver.findElement(inputOrderAddress).sendKeys(userAddress);\r\n\r\n        driver.findElement(inputOrderMetro).click();\r\n        driver.findElement(inputOrderMetro).sendKeys(userMetro);\r\n        driver.findElement(inputOrderMetro).sendKeys(Keys.ARROW_DOWN);\r\n        driver.findElement(inputOrderMetro).sendKeys(Keys.ENTER);\r\n\r\n        driver.findElement(inputOrderPhone).sendKeys(userPhone);\r\n    }\r\n    // Нажатие на кнопку Далее\r\n    public void buttonNextClick(){\r\n        driver.findElement(buttonNext).click();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/ru/yandex/praktikum/SamokatOrderPageTest.java b/src/main/java/ru/yandex/praktikum/SamokatOrderPageTest.java
+--- a/src/main/java/ru/yandex/praktikum/SamokatOrderPageTest.java	(revision 8c23eb7bbe616480b8b835b34f7ad6e4284dc419)
++++ b/src/main/java/ru/yandex/praktikum/SamokatOrderPageTest.java	(date 1659245846907)
+@@ -18,13 +18,14 @@
+     private final By inputOrderMetro = new By.ByXPath(".//*[contains(@placeholder,'Станция')]");
+     // Поле ввода Телефон
+     private final By inputOrderPhone = new By.ByXPath(".//*[contains(@placeholder,'Телефон')]");
++
+     // Конструктор первой страницы заказа
+-    public SamokatOrderPageTest(WebDriver driver){
++    public SamokatOrderPageTest(WebDriver driver) {
+         this.driver = driver;
+-
+     }
++
+     // Ввод данных на первую страницу заказа
+-    public void OrderFormDataComplete(String userName, String userSurname, String userAddress, String userMetro, String userPhone){
++    public void OrderFormDataComplete(String userName, String userSurname, String userAddress, String userMetro, String userPhone) {
+ 
+         driver.findElement(inputOrderName).clear();
+         driver.findElement(inputOrderSurname).clear();
+@@ -46,8 +47,9 @@
+ 
+         driver.findElement(inputOrderPhone).sendKeys(userPhone);
+     }
++
+     // Нажатие на кнопку Далее
+-    public void buttonNextClick(){
++    public void buttonNextClick() {
+         driver.findElement(buttonNext).click();
+     }
+ }
+Index: src/test/java/ru/yandex/praktikum/SamokatTestFAQ.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.yandex.praktikum;\r\n\r\nimport org.junit.After;\r\nimport org.junit.Test;\r\nimport org.junit.runner.RunWith;\r\nimport org.junit.runners.Parameterized;\r\nimport org.openqa.selenium.WebDriver;\r\n\r\n\r\n@RunWith(Parameterized.class)\r\n\r\npublic class SamokatTestFAQ {\r\n    private final String useBrowser; // Use \"Chrome\" or \"EDGE\"\r\n\r\n    private WebDriver driver;\r\n\r\n    private final String pageMain = \"https://qa-scooter.praktikum-services.ru/\";\r\n\r\n    public SamokatTestFAQ(String useBrowser){\r\n        this.useBrowser = useBrowser;\r\n    }\r\n    @Parameterized.Parameters\r\n    public static Object[] getTestData() {\r\n        return new Object[] {\"EDGE\",\"Chrome\",};\r\n        }\r\n    @Test\r\n    public void TestFAQ() {\r\n\r\n        driver = SamokatDriver.initDriver(useBrowser);\r\n        driver.get(pageMain);\r\n\r\n        SamokatCookieOk cookieDialog = new SamokatCookieOk(driver);\r\n        cookieDialog.buttonCookieOkClick();\r\n\r\n        SamokatMainPageTest mainPage = new SamokatMainPageTest(driver);\r\n        mainPage.userFAQTest();\r\n\r\n    }\r\n    @After\r\n    public void teardown() {\r\n        // Закрыть браузер\r\n        driver.quit();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/test/java/ru/yandex/praktikum/SamokatTestFAQ.java b/src/test/java/ru/yandex/praktikum/SamokatTestFAQ.java
+--- a/src/test/java/ru/yandex/praktikum/SamokatTestFAQ.java	(revision 8c23eb7bbe616480b8b835b34f7ad6e4284dc419)
++++ b/src/test/java/ru/yandex/praktikum/SamokatTestFAQ.java	(date 1659245846917)
+@@ -6,25 +6,23 @@
+ import org.junit.runners.Parameterized;
+ import org.openqa.selenium.WebDriver;
+ 
+-
+ @RunWith(Parameterized.class)
+-
+ public class SamokatTestFAQ {
+     private final String useBrowser; // Use "Chrome" or "EDGE"
+-
+     private WebDriver driver;
+-
+     private final String pageMain = "https://qa-scooter.praktikum-services.ru/";
+ 
+-    public SamokatTestFAQ(String useBrowser){
++    public SamokatTestFAQ(String useBrowser) {
+         this.useBrowser = useBrowser;
+     }
++
+     @Parameterized.Parameters
+     public static Object[] getTestData() {
+-        return new Object[] {"EDGE","Chrome",};
+-        }
++        return new Object[]{"EDGE", "Chrome",};
++    }
++
+     @Test
+-    public void TestFAQ() {
++    public void testFAQ() {
+ 
+         driver = SamokatDriver.initDriver(useBrowser);
+         driver.get(pageMain);
+@@ -34,8 +32,8 @@
+ 
+         SamokatMainPageTest mainPage = new SamokatMainPageTest(driver);
+         mainPage.userFAQTest();
+-
+     }
++
+     @After
+     public void teardown() {
+         // Закрыть браузер
+Index: src/main/java/ru/yandex/praktikum/SamokatDriver.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.yandex.praktikum;\r\n\r\nimport org.openqa.selenium.WebDriver;\r\nimport org.openqa.selenium.chrome.ChromeDriver;\r\nimport org.openqa.selenium.edge.EdgeDriver;\r\n\r\nimport java.util.Objects;\r\n\r\npublic abstract class SamokatDriver {\r\n\r\n    public static WebDriver initDriver(String useBrowser){\r\n        WebDriver iDriver = null;\r\n        if(Objects.equals(useBrowser,\"Chrome\") ) {\r\n            iDriver = new ChromeDriver();\r\n        } else if(Objects.equals(useBrowser, \"EDGE\")) {\r\n            System.setProperty(\"webdriver.edge.driver\", \"C:\\\\Program Files\\\\WebDriver\\\\bin\\\\msedgedriver.exe\");\r\n            iDriver = new EdgeDriver();\r\n        } else {\r\n            System.out.println(\"Browser \" + useBrowser + \" not supported.\");\r\n        }\r\n        return iDriver;\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/ru/yandex/praktikum/SamokatDriver.java b/src/main/java/ru/yandex/praktikum/SamokatDriver.java
+--- a/src/main/java/ru/yandex/praktikum/SamokatDriver.java	(revision 8c23eb7bbe616480b8b835b34f7ad6e4284dc419)
++++ b/src/main/java/ru/yandex/praktikum/SamokatDriver.java	(date 1659245846944)
+@@ -8,11 +8,11 @@
+ 
+ public abstract class SamokatDriver {
+ 
+-    public static WebDriver initDriver(String useBrowser){
++    public static WebDriver initDriver(String useBrowser) {
+         WebDriver iDriver = null;
+-        if(Objects.equals(useBrowser,"Chrome") ) {
++        if (Objects.equals(useBrowser, "Chrome")) {
+             iDriver = new ChromeDriver();
+-        } else if(Objects.equals(useBrowser, "EDGE")) {
++        } else if (Objects.equals(useBrowser, "EDGE")) {
+             System.setProperty("webdriver.edge.driver", "C:\\Program Files\\WebDriver\\bin\\msedgedriver.exe");
+             iDriver = new EdgeDriver();
+         } else {
+Index: src/main/java/ru/yandex/praktikum/SamokatCookieOk.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package ru.yandex.praktikum;\r\n\r\nimport org.openqa.selenium.By;\r\nimport org.openqa.selenium.WebDriver;\r\n\r\npublic class SamokatCookieOk {\r\n    private WebDriver driver;\r\n    // кнопка согласия на куки\r\n    private final By buttonCookieOk = new By.ByClassName(\"App_CookieButton__3cvqF\");\r\n    // конструктор класса диалог куки\r\n    public SamokatCookieOk(WebDriver driver){\r\n        this.driver = driver;\r\n    }\r\n    // нажатие на кнопку согласия с куки\r\n    public void buttonCookieOkClick(){\r\n        if (driver.findElements(buttonCookieOk).size() > 0) {\r\n            driver.findElement(buttonCookieOk).click();\r\n        }\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/ru/yandex/praktikum/SamokatCookieOk.java b/src/main/java/ru/yandex/praktikum/SamokatCookieOk.java
+--- a/src/main/java/ru/yandex/praktikum/SamokatCookieOk.java	(revision 8c23eb7bbe616480b8b835b34f7ad6e4284dc419)
++++ b/src/main/java/ru/yandex/praktikum/SamokatCookieOk.java	(date 1659245846912)
+@@ -7,15 +7,16 @@
+     private WebDriver driver;
+     // кнопка согласия на куки
+     private final By buttonCookieOk = new By.ByClassName("App_CookieButton__3cvqF");
++
+     // конструктор класса диалог куки
+-    public SamokatCookieOk(WebDriver driver){
++    public SamokatCookieOk(WebDriver driver) {
+         this.driver = driver;
+     }
++
+     // нажатие на кнопку согласия с куки
+-    public void buttonCookieOkClick(){
++    public void buttonCookieOkClick() {
+         if (driver.findElements(buttonCookieOk).size() > 0) {
+             driver.findElement(buttonCookieOk).click();
+         }
+     }
+-
+ }
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"9fe92a24-c3f4-48e7-9393-95dc152c9723\" name=\"Changes\" comment=\"\">\r\n      <change afterPath=\"$PROJECT_DIR$/.gitignore\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/misc.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/uiDesigner.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/vcs.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/pom.xml\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatCookieOk.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatDriver.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatMainPageTest.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatOrderPageTest.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatRentPageTest.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/test/java/ru/yandex/praktikum/SamokatTestFAQ.java\" afterDir=\"false\" />\r\n      <change afterPath=\"$PROJECT_DIR$/src/test/java/ru/yandex/praktikum/SamokatTestOrder.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2CWt9fMTxFNDsPSrl3A4OHTfWWg\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,\r\n    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Java&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RunManager\" selected=\"JUnit.SamokatTestOrder\">\r\n    <configuration name=\"MainTest.Test2\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"Samokat\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"ru.yandex.praktikum.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"ru.yandex.praktikum\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"ru.yandex.praktikum.MainTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"Test2\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"MainTest.TestFAQ\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"Samokat\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"ru.yandex.praktikum.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"ru.yandex.praktikum\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"ru.yandex.praktikum.MainTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"TestFAQ\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"MainTest.TestOrder\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"Samokat\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"ru.yandex.praktikum.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"ru.yandex.praktikum\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"ru.yandex.praktikum.MainTest\" />\r\n      <option name=\"METHOD_NAME\" value=\"TestOrder\" />\r\n      <option name=\"TEST_OBJECT\" value=\"method\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"SamokatTestFAQ\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"Samokat\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"ru.yandex.praktikum.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"ru.yandex.praktikum\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"ru.yandex.praktikum.SamokatTestFAQ\" />\r\n      <option name=\"TEST_OBJECT\" value=\"class\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <configuration name=\"SamokatTestOrder\" type=\"JUnit\" factoryName=\"JUnit\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"Samokat\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"ru.yandex.praktikum.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <option name=\"PACKAGE_NAME\" value=\"ru.yandex.praktikum\" />\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"ru.yandex.praktikum.SamokatTestOrder\" />\r\n      <option name=\"TEST_OBJECT\" value=\"class\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"JUnit.SamokatTestOrder\" />\r\n        <item itemvalue=\"JUnit.SamokatTestFAQ\" />\r\n        <item itemvalue=\"JUnit.MainTest.TestOrder\" />\r\n        <item itemvalue=\"JUnit.MainTest.TestFAQ\" />\r\n        <item itemvalue=\"JUnit.MainTest.Test2\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"9fe92a24-c3f4-48e7-9393-95dc152c9723\" name=\"Changes\" comment=\"\" />\r\n      <created>1658930027518</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1658930027518</updated>\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 8c23eb7bbe616480b8b835b34f7ad6e4284dc419)
++++ b/.idea/workspace.xml	(date 1659245719710)
+@@ -4,20 +4,15 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="9fe92a24-c3f4-48e7-9393-95dc152c9723" name="Changes" comment="">
+-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatCookieOk.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatDriver.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatMainPageTest.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatOrderPageTest.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatRentPageTest.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/test/java/ru/yandex/praktikum/SamokatTestFAQ.java" afterDir="false" />
+-      <change afterPath="$PROJECT_DIR$/src/test/java/ru/yandex/praktikum/SamokatTestOrder.java" afterDir="false" />
++    <list default="true" id="9fe92a24-c3f4-48e7-9393-95dc152c9723" name="Changes" comment="Samokat test project. First commit.">
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatCookieOk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatCookieOk.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatDriver.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatMainPageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatMainPageTest.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatOrderPageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatOrderPageTest.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatRentPageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatRentPageTest.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/test/java/ru/yandex/praktikum/SamokatTestFAQ.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/yandex/praktikum/SamokatTestFAQ.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/test/java/ru/yandex/praktikum/SamokatTestOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/yandex/praktikum/SamokatTestOrder.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -149,6 +144,14 @@
+       <option name="presentableId" value="Default" />
+       <updated>1658930027518</updated>
+     </task>
++    <task id="LOCAL-00001" summary="Samokat test project. First commit.">
++      <created>1659177321077</created>
++      <option name="number" value="00001" />
++      <option name="presentableId" value="LOCAL-00001" />
++      <option name="project" value="LOCAL" />
++      <updated>1659177321077</updated>
++    </task>
++    <option name="localTasksCounter" value="2" />
+     <servers />
+   </component>
+   <component name="Vcs.Log.Tabs.Properties">
+@@ -162,4 +165,8 @@
+       </map>
+     </option>
+   </component>
++  <component name="VcsManagerConfiguration">
++    <MESSAGE value="Samokat test project. First commit." />
++    <option name="LAST_COMMIT_MESSAGE" value="Samokat test project. First commit." />
++  </component>
+ </project>
+\ No newline at end of file
