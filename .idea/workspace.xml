@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9fe92a24-c3f4-48e7-9393-95dc152c9723" name="Changes" comment="Samokat test project. First commit.">
+    <list default="true" id="9fe92a24-c3f4-48e7-9393-95dc152c9723" name="Changes" comment="Samokat test project. Style update.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatCookieOk.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatCookieOk.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatDriver.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatDriver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatMainPageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatMainPageTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatOrderPageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatOrderPageTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatRentPageTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ru/yandex/praktikum/SamokatRentPageTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ru/yandex/praktikum/SamokatTestFAQ.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/yandex/praktikum/SamokatTestFAQ.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ru/yandex/praktikum/SamokatTestOrder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ru/yandex/praktikum/SamokatTestOrder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -151,7 +145,14 @@
       <option name="project" value="LOCAL" />
       <updated>1659177321077</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Samokat test project. Style update.">
+      <created>1659263316552</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1659263316552</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -167,6 +168,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Samokat test project. First commit." />
-    <option name="LAST_COMMIT_MESSAGE" value="Samokat test project. First commit." />
+    <MESSAGE value="Samokat test project. Style update." />
+    <option name="LAST_COMMIT_MESSAGE" value="Samokat test project. Style update." />
   </component>
 </project>
